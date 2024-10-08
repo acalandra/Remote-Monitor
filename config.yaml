@@ -1,0 +1,3 @@
+port: 8000
+web_folder: "/static"
+home_file: "index.html"
