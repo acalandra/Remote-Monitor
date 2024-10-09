@@ -1,11 +1,27 @@
 import platform
 import psutil
+from cpuinfo import get_cpu_info
+import gpustat
 
-def get_cpu_info():
+current_platform = platform.system()
+
+def get_cpu_infos():
+    info = get_cpu_info()
+    
+    cpu_temp = -1
+    if (current_platform == "Windows"):
+        cpu_temp = psutil.sensors_temperatures()
+    
+    cpu_fan = -1
+    if (current_platform == "Windows"):
+        cpu_fan = psutil.sensors_fans()
+
     return {
-        "processor": platform.processor(),
-        "cpu_count": psutil.cpu_count(logical=False),
-        "cpu_logical_count": psutil.cpu_count(logical=True)
+        "cpu_name": info['brand_raw'],
+        "cpu_frequency": info['hz_actual'][0],
+        "cpu_usage": psutil.cpu_percent(),
+        "cpu_temp": cpu_temp,
+        "cpu_fan": cpu_fan
     }
 
 def get_memory_info():
@@ -25,3 +41,10 @@ def get_disk_info():
         "free": disk.free,
         "percent": disk.percent
     }
+
+def get_gpu_info():
+    if (current_platform == "Windows"):
+        gpu_stats = gpustat.GPUStatCollection.new_query()
+        for gpu in gpu_stats.gpus:
+            print(f"GPU {gpu.index}: {gpu.name}, Utilization: {gpu.utilization}%")
+    return {}
