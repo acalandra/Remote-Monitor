@@ -5,6 +5,7 @@ import socket
 import io
 import yaml
 import qrcode
+import hardware_info
 
 app = FastAPI()
 
@@ -27,12 +28,17 @@ def get_local_ip():
     return ip
 
 # Monter le répertoire "www" comme un serveur de fichiers statiques
+app.mount("/_nuxt", StaticFiles(directory="www/_nuxt"), name="_nuxt")
 app.mount(web_folder, StaticFiles(directory="www"), name="static")
 
 # Exemple d'endpoint API
-@app.get("/api/hello")
-async def read_hello():
-    return {"message": "Hello, world!"}
+@app.get("/api/data")
+async def get_all_data():
+    return {
+        "cpu": hardware_info.get_cpu_info(),
+        "memory": hardware_info.get_memory_info(),
+        "disk": hardware_info.get_disk_info()
+    }
 
 if __name__ == "__main__":
     local_ip = get_local_ip()
