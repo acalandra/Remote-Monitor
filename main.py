@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 import sys
@@ -75,7 +76,23 @@ async def get_all_data():
         "gpu": hardware_info.get_gpu_info()
     }
 
+
+def allow_external_requests(origin):
+    if origin:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=[origin], 
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+
 if __name__ == "__main__":
+    external_origin = config.get("external_origin")
+    if external_origin:
+        allow_external_requests(external_origin)
+
     multiprocessing.freeze_support()
 
     local_ip = get_local_ip()

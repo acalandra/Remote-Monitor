@@ -16,5 +16,6 @@ Then the front is available at your local machine IP `{IP}:8000/static/index.htm
 Data are served at your local machine IP `{IP}:8000/api/data`
 
 ## Packaging du projet 
+
 `pyinstaller --add-data "config.yaml:." --add-data "www:www" main.py`
 
