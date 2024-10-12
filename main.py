@@ -55,7 +55,8 @@ mount_subdirectories(app, www_path)
 @app.on_event("startup")
 async def startup_event():
     try:
-        app.state.HardwareHandle = hardware_info.initialize_hardware_monitor("OpenHardwareMonitorLib.dll")
+        dll_filename = os.path.join(get_base_path(), 'vendors/OpenHardwareMonitorLib.dll')
+        app.state.HardwareHandle = hardware_info.initialize_hardware_monitor(dll_filename)
     except Exception as e:
         print(f"Error initializing OpenHardwareMonitor: {e}")
 

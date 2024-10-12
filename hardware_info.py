@@ -2,13 +2,12 @@ import os
 import clr
 import psutil
 
-def initialize_hardware_monitor(dll_filename):
+def initialize_hardware_monitor(dll):
     """
     Initialize OpenHardwareMonitor or other hardware monitoring libraries by passing the DLL filename.
     """
     try:
-        file_path = os.path.abspath(f'vendors/{dll_filename}')
-        clr.AddReference(file_path)
+        clr.AddReference(dll)
 
         from OpenHardwareMonitor import Hardware
 
@@ -23,7 +22,7 @@ def initialize_hardware_monitor(dll_filename):
 
         return handle
     except Exception as e:
-        print(f"Error initializing {dll_filename}: {e}")
+        print(f"Error initializing {dll}: {e}")
         return None
 
 def parse_sensor_to_dict(sensor):

@@ -43,5 +43,6 @@ Data are served at your local machine IP `{IP}:8000/api/data`
 
 ## Packaging du projet 
 
-`pyinstaller --add-data "config.yaml:." --add-data "www:www" main.py`
+- MacOS : `pyinstaller --add-data "config.yaml:." --add-data "www:www" --add-data "vendors:vendors" main.py`
 
+- Windows : `pyinstaller --add-data "config.yaml;." --add-data "www;www" --add-data "vendors;vendors" main.py`
