@@ -1,11 +1,37 @@
 # Gauge
 
-## venv lifecycle
+## External dependencies
 
-`source env/bin/activate` to activae venv
+### Activate venv
 
-`deactivate` to deactivate it
+* MacOS
 
+`source env/bin/activate`
+
+* Windows CMD :
+
+`env/Scrpits/activate`
+
+* Windows Powershell :
+
+`.\env\Scripts\Activate.ps1`
+
+* Winddows Git Bash:
+
+`source env\Scripts\activate`
+
+### Download dependencies
+
+`pip install -r requirements.txt`
+
+### Requirement.txt update
+
+If you add dependencies to the venv project, don't forget to run :
+`pip freeze > requirements.txt` to keep this file up to date.
+
+### Deactivate venv
+
+`deactivate` 
 
 ## Run projet
 
