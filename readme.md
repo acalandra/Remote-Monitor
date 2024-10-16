@@ -35,7 +35,7 @@ If you add dependencies to the venv project, don't forget to run :
 
 ## Run projet
 
-The project can be run using `python3 main.py`.
+The project can be run using `python main.py`.
 
 Then the front is available at your local machine IP `{IP}:8000/static/index.html`.
 
@@ -43,6 +43,6 @@ Data are served at your local machine IP `{IP}:8000/api/data`
 
 ## Packaging du projet 
 
-- MacOS : `pyinstaller --add-data "config.yaml:." --add-data "www:www" --add-data "vendors:vendors" main.py`
+- MacOS : `pyinstaller --clean --add-data "config.yaml:." --add-data "www:www" --add-data "vendors:vendors" main.py`
 
-- Windows : `pyinstaller --add-data "config.yaml;." --add-data "www;www" --add-data "vendors;vendors" main.py`
+- Windows : `pyinstaller --clean --add-data "config.yaml;." --add-data "www;www" --add-data "vendors;vendors" main.py`

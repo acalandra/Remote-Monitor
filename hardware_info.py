@@ -2,6 +2,10 @@ import os
 import clr
 import psutil
 
+previous_net_in = None
+previous_net_out = None
+interface = None
+
 def initialize_hardware_monitor(dll):
     """
     Initialize OpenHardwareMonitor or other hardware monitoring libraries by passing the DLL filename.
@@ -75,6 +79,7 @@ def hardware_to_dict(hardware):
         "storage": storage_data,
         "ram": next(x for x in hardware_data if x["type"] == "ram"),
         "motherboard": next(x for x in hardware_data if x["type"] == "motherboard"),
+        "network": net_usage()
     }
 
     return result
@@ -94,6 +99,39 @@ def get_storage_info():
     except Exception as e:
         print(f"Error retrieving storage information: {e}")
         return {}
+    
+def select_first_interface():
+    global interface
+    interfaces = psutil.net_io_counters(pernic=True).keys()
+    print(interfaces)
+
+    if interfaces:
+        interface = list(interfaces)[0]  # Choisit la première interface disponible
+    else:
+        raise ValueError("Aucune interface réseau disponible")
+
+def net_usage():
+    global previous_net_in, previous_net_out, interface
+
+    if interface is None:
+        select_first_interface()
+
+    net_stat = psutil.net_io_counters(pernic=True, nowrap=True)[interface]
+    net_in = net_stat.bytes_recv
+    net_out = net_stat.bytes_sent
+    
+    if previous_net_in is None or previous_net_out is None:
+        previous_net_in = net_in
+        previous_net_out = net_out
+        return {"net_in": 0, "net_out": 0}
+    
+    net_in_diff = round((net_in - previous_net_in) / 1024 / 1024, 3)
+    net_out_diff = round((net_out - previous_net_out) / 1024 / 1024, 3)
+
+    previous_net_in = net_in
+    previous_net_out = net_out
+
+    return {"name": interface, "net_in": net_in_diff, "net_out": net_out_diff}
 
 def type_for_hardware(hardware_name):
     """
