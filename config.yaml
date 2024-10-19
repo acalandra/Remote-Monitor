@@ -1,4 +1,4 @@
 port: 8000
 web_folder: "/static"
 home_file: "index.html"
-external_origin: "http://localhost:3000"
+#external_origin: "http://localhost:3000"
