@@ -3,7 +3,7 @@
 ## Purpose
 
 My goal with this project was to propose an interface to easily monitor PC data in real time.
-Launching the application couldn't be simpler. Go to the release page and download the archive.
+Launching the application couldn't be simpler. Go to the [releases](https://github.com/acalandra/Remote-Monitor/releases) page and download the archive.
 Extract it to your machine and run the main.exe file. When it launches, the program will probably ask you for access to your local network : this is normal, as it's how the data will be sent to another device.
 
 When the program starts, it displays a QR Code. You can scan it with your phone or tablet to open the tracking page. If you prefer, you can use the url that also appears when the program starts up to paste it into your browser's url bar. 

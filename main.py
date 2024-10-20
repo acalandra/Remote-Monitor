@@ -78,18 +78,25 @@ def allow_external_requests(origin):
             )
 
 if __name__ == "__main__":
-    external_origin = config.get("external_origin")
-    if external_origin:
-        allow_external_requests(external_origin)
+    try:
+        external_origin = config.get("external_origin")
+        if external_origin:
+            allow_external_requests(external_origin)
 
-    multiprocessing.freeze_support()
+        multiprocessing.freeze_support()
 
-    local_ip = get_local_ip()
-    print(f"Starting UI server on {local_ip}:{port}{web_folder}/{home_file}")
-    print(f"Starting API server on {local_ip}:{port}/api/data")
+        local_ip = get_local_ip()
+        print(f"Starting UI server on {local_ip}:{port}{web_folder}/{home_file}")
+        print(f"Starting API server on {local_ip}:{port}/api/data")
 
-    qr = qrcode.QRCode()
-    qr.add_data(f"http://{local_ip}:{port}{web_folder}/{home_file}")
-    qr.print_ascii()
+        qr = qrcode.QRCode()
+        qr.add_data(f"http://{local_ip}:{port}{web_folder}/{home_file}")
+        qr.print_ascii()
 
-    uvicorn.run(app, host="0.0.0.0", port=port, reload=False, workers=1)
+        uvicorn.run(app, host="0.0.0.0", port=port, reload=False, workers=1)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    # Add this line to prevent window closure
+    input("Press Enter to exit...")     
