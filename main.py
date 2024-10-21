@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 import sys
+import clr
 import uvicorn
 import socket
 import yaml
@@ -26,6 +27,7 @@ config = load_config()
 port = config.get("port", 8000)
 web_folder = config.get("web_folder", "/static")
 home_file = config.get("home_file", "index.html")
+dll_path = os.path.join(get_base_path(), 'vendors', 'Python.Runtime.dll')
 
 def get_local_ip():
     """Get the local IP address of the machine."""
@@ -79,6 +81,8 @@ def allow_external_requests(origin):
 
 if __name__ == "__main__":
     try:
+        clr.AddReference(dll_path)
+        
         external_origin = config.get("external_origin")
         if external_origin:
             allow_external_requests(external_origin)

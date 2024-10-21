@@ -67,6 +67,6 @@ Data are served at your local machine IP `{IP}:{port}/api/data`
 
 ## Packaging du projet 
 
-- MacOS : `pyinstaller --clean --add-data "config.yaml:." --add-data "www:www" --add-data "vendors:vendors" main.py`
+- MacOS : `pyinstaller --clean --add-data "config.yaml:." --add-data "www:www" --add-data "vendors:vendors" --add-binary "vendors/Python.Runtime.dll:vendors" main.py`
 
-- Windows : `pyinstaller --clean --add-data "config.yaml;." --add-data "www;www" --add-data "vendors;vendors" main.py`
+- Windows : `pyinstaller --clean --add-data "config.yaml;." --add-data "www;www" --add-data "vendors;vendors" --add-binary "vendors/Python.Runtime.dll;vendors" main.py`
